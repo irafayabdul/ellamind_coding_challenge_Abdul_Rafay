@@ -36,12 +36,15 @@ async def judge_completions(prompt: str, completions: list[str]) -> int:
 
     # Setting up the Role and Evaluation criteria for our Judge.
     judging_prompt_header = """
-    You are an impartial and expert AI judge. Your task is to carefully evaluate a series of completions for a given prompt and determine which one is the best.
+    You are an impartial and meticulous AI judge. Your task is to find the single best completion for the given user prompt by following a strict, step-by-step evaluation based on the criteria below, listed in order of importance.
+
 
     **Evaluation Criteria:**
-    1.  **Adherence to Instructions:** The completion must strictly follow all constraints from the original prompt (e.g., word count, tone, character traits, word repetition).
-    2.  **Quality of Writing:** The text should be well-written, coherent, engaging, and stylistically appropriate.
-    3.  **Fulfillment of Intent:** The completion should best capture the essence and intent of the user's request.
+    1.  **Correctness & Factual Accuracy (Highest Priority):** The answer must be factually correct. Any calculations, code, or logic must be sound. An incorrect answer is an immediate failure.
+    2.  **Fulfillment of Intent:** The completion must fully address the core question and satisfy the user's primary goal.
+    3.  **Adherence to Constraints:** The completion must strictly follow all constraints from the original prompt (e.g., word count, tone, character traits, word repetition). A failure on a **major** constraint (e.g. core task) is more severe than a failure on a **minor** one (e.g., word count).
+    4.  **Quality of Writing:** The text should be well-written, clear, concise, coherent, and stylistically appropriate for the prompt.
+    5.  **Compliance & Formatting:** The response must be safe and use formatting (like markdown or code blocks) correctly and only when requested.
 
     **Original Prompt:**
     """
@@ -67,12 +70,30 @@ async def judge_completions(prompt: str, completions: list[str]) -> int:
     #### This is the Chain-of-Thought prompt. adding Lets think step-by-step instruction automatically triggers zero shot COT in LLM as showed in this paper "https://arxiv.org/pdf/2205.11916" Large Language Models are Zero-Shot Reasoners
     judging_prompt_footer = """
     ---
-    **Your Task:**
-    First, lets think step-by-step. Briefly analyze each candidate completion, evaluating it against the user prompt's criteria inside `<reasoning>` tags.
+    ## Your Task
+    Inside a single `<reasoning>` block, create a scorecard for **each** completion. For each one, briefly evaluate it against the 5 criteria.
+    After scoring all completions, write a `Final Comparison` to explain your choice.
+    
+    Finally, after the reasoning block, state the single integer index of the best completion inside `<final_answer>` tags.
 
-    Compare the completions and decide which one is the best based on the your analysis. Provide the index of this best completion inside `<final_answer>` tags.
+    Example of your response format:
+    <reasoning>
+    **Analysis of Completion 0:**
+    1. Correctness: [Your analysis]
+    2. Intent: [Your analysis]
+    3. Constraints: [Your analysis]
+    4. Quality: [Your analysis]
+    5. Compliance: [Your analysis]
+
+    **Analysis of Completion 1:**
+    ... and so on for all completions.
+
+    **Final Comparison:**
+    [Your final summary explaining your choice.]
+    </reasoning>
+    <final_answer>2</final_answer>
     """
-
+    # 5.  **Rerun this process 5 times:** Build the scorecard 5 times in similar manner
     # Combining all parts into the final prompt.
     final_judging_prompt = judging_prompt_header + judging_prompt_body + judging_prompt_footer
 
@@ -84,7 +105,7 @@ async def judge_completions(prompt: str, completions: list[str]) -> int:
                 ChatCompletionUserMessageParam(role="user", content=final_judging_prompt)
             ],
             temperature=0.0,  # Setting temp to 0 for deterministic evaluation
-            max_tokens=1024,  # Increased max_tokens to allow for reasoning
+            max_tokens=2048,  # Increased max_tokens to allow for reasoning
         )
 
         # Extracting the content from the response.
@@ -104,7 +125,7 @@ async def judge_completions(prompt: str, completions: list[str]) -> int:
         #         # Fallback to the first completion if we do not find any number.
         #         return 0
 
-        #### Parse the zero shot COT answer from within the <final_answer> tags.
+        #### Parse the COT answer from within the <final_answer> tags.
         match = re.search(r'<final_answer>([0-3])</final_answer>', judged_index)
         if match:
             return int(match.group(1))

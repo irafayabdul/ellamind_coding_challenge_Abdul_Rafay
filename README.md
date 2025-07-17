@@ -68,3 +68,10 @@ You can request usage information for the provided API key from [OpenRouter](htt
 - Our zero shot COT also performs similarly, therefore we need to apply more rigourous COT in next step
 
 <html><body><p align="center"><img src="zeroshot_COT_complete.png" width="75%" height="75%"/></p></body></html>
+
+- After looking in detail on test samples, i decide to improve not only the COT prompt but also the evaluation criteria.
+- Zeroshot prompting without COT still gives 75% on this Criteria
+<html><body><p align="center"><img src="zeroshot_prompting_criteriaimproved_complete.png" width="75%" height="75%"/></p></body></html>
+
+- But I managed to improve accuracy to 77.5% on this improved criteria with COT prompting, lets try benefiting from sampling strategies now and other params. We can also consider Self consistency afterwards.
+<html><body><p align="center"><img src="COT_criteriaimproved_complete.png" width="75%" height="75%"/></p></body></html>
