@@ -1,0 +1,5 @@
+openai==1.91.0
+datasets==3.6.0
+pandas==2.3.0
+python-dotenv
+tqdm
