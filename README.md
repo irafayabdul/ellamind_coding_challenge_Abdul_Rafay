@@ -54,3 +54,9 @@ You can request usage information for the provided API key from [OpenRouter](htt
 - Time investment: one to three hours
 - We would expect the result within a week of receiving the challenge.
 - Perfect results aren't expected.
+
+
+## Submission Results in Steps
+- Here we can see the completion time and 50% accuracy of zero shot prompting which is not sufficient. Here we will not try few shot prompting and go directly to COT reasoning.
+
+<html><body><p align="center"><img src="zeroshot_prompting.png" width="75%" height="75%"/></p></body></html>
