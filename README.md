@@ -75,3 +75,11 @@ You can request usage information for the provided API key from [OpenRouter](htt
 
 - But I managed to improve accuracy to 77.5% on this improved criteria with COT prompting, lets try benefiting from sampling strategies now and other params. We can also consider Self consistency afterwards.
 <html><body><p align="center"><img src="COT_criteriaimproved_complete.png" width="75%" height="75%"/></p></body></html>
+
+- I managed to get 80% accuracy but tweaking top_p value.
+<html><body><p align="center"><img src="COT_criteriaimproved_complete_with_top_p.png" width="75%" height="75%"/></p></body></html>
+
+- Can not continue as Key expired.
+<html><body><p align="center"><img src="key_expiry.png" width="75%" height="75%"/></p></body></html>
+
+Since the API limit is reached, I will close me submission with the conclusion that, I we achieved 80% accuracy with our Judge using simple COT prompting, we can get a reasonably higher accuracy if we apply Self Consistency (looping over 3 or 5 completions for each sample and taking the majority vote, or even apply Tree of Thought Prompting).

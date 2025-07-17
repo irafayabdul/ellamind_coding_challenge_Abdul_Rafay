@@ -104,8 +104,11 @@ async def judge_completions(prompt: str, completions: list[str]) -> int:
                 # adding is to fix the inspection warning, not strictly needed otherwise
                 ChatCompletionUserMessageParam(role="user", content=final_judging_prompt)
             ],
-            temperature=0.0,  # Setting temp to 0 for deterministic evaluation
-            max_tokens=2048,  # Increased max_tokens to allow for reasoning
+            temperature=0.3,  # Setting temp to 0 for deterministic evaluation
+            max_tokens=4096,  # Increased max_tokens to allow for reasoning
+            # stop=["</final_answer>"],
+            # seed=12345,
+            top_p=0.5
         )
 
         # Extracting the content from the response.
