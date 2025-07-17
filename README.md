@@ -59,4 +59,8 @@ You can request usage information for the provided API key from [OpenRouter](htt
 ## Submission Results in Steps
 - Here we can see the completion time and 50% accuracy of zero shot prompting which is not sufficient. Here we will not try few shot prompting and go directly to COT reasoning.
 
-<html><body><p align="center"><img src="zeroshot_prompting.png" width="75%" height="75%"/></p></body></html>
+<html><body><p align="center"><img src="zeroshot_prompting_debug.png" width="75%" height="75%"/></p></body></html>
+
+- Interestingly, zero shot prompting already achieve 75% accuracy on this test data.
+
+<html><body><p align="center"><img src="zeroshot_prompting_complete.png" width="75%" height="75%"/></p></body></html>
