@@ -64,3 +64,7 @@ You can request usage information for the provided API key from [OpenRouter](htt
 - Interestingly, zero shot prompting already achieve 75% accuracy on this test data.
 
 <html><body><p align="center"><img src="zeroshot_prompting_complete.png" width="75%" height="75%"/></p></body></html>
+
+- Our zero shot COT also performs similarly, therefore we need to apply more rigourous COT in next step
+
+<html><body><p align="center"><img src="zeroshot_COT_complete.png" width="75%" height="75%"/></p></body></html>
