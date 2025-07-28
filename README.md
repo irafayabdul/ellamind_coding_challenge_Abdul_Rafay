@@ -83,3 +83,17 @@ You can request usage information for the provided API key from [OpenRouter](htt
 <html><body><p align="center"><img src="key_expiry.png" width="75%" height="75%"/></p></body></html>
 
 Since the API limit is reached, I will close me submission with the conclusion that, I we achieved 80% accuracy with our Judge using simple COT prompting, we can get a reasonably higher accuracy if we apply Self Consistency (looping over 3 or 5 completions for each sample and taking the majority vote, or even apply Tree of Thought Prompting).
+
+
+
+Here I used my personal key to improve the approach.
+
+Step 1 implementing self consistency -> boasted accuracy from 80% -> 85%
+
+Step 2 Multistep Comparative COT -> boasted accuracy from 85% -> 90%
+
+Step 3 Multi persona with Meta Review TOT prompting. Code not shown here as I changed a lot of code for that -> boasted accuracy from 90% -> 92.5%
+
+<html><body><p align="center"><img src="1 - self consistency.png" width="75%" height="75%"/></p></body></html>
+<html><body><p align="center"><img src="2 - multi-Step Comparative CoT Reasoning with self consistency.png" width="75%" height="75%"/></p></body></html>
+<html><body><p align="center"><img src="3 - programmatic ToT with 4 experts, meta review step and self consistency.png" width="75%" height="75%"/></p></body></html>
